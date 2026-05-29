@@ -1,35 +1,15 @@
-import Link from "next/link";
-import { ArrowRight, CheckCircle2, Microscope, ShieldCheck } from "lucide-react";
+import { CheckCircle2, Microscope, ShieldCheck } from "lucide-react";
+import { FeaturedCompounds } from "@/components/featured-compounds";
 import { Hero } from "@/components/hero";
-import { ProductCard } from "@/components/product-card";
-import { faqs, products } from "@/data/products";
+import { TrustStrip } from "@/components/trust-strip";
+import { faqs } from "@/data/products";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <section className="bg-white py-20">
-        <div className="section-shell">
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <div>
-              <p className="text-sm font-black uppercase tracking-[0.22em] text-cyan-600">
-                Featured compounds
-              </p>
-              <h2 className="mt-3 max-w-2xl text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">
-                Product cards built for quick research comparison
-              </h2>
-            </div>
-            <Link href="/peptides" className="inline-flex items-center gap-2 font-bold text-slate-950">
-              View catalog <ArrowRight size={18} />
-            </Link>
-          </div>
-          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {products.map((product) => (
-              <ProductCard key={product.slug} product={product} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <TrustStrip />
+      <FeaturedCompounds />
 
       <section className="bg-slate-950 py-20 text-white">
         <div className="section-shell grid gap-8 md:grid-cols-3">

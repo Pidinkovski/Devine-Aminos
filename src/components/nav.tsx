@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Search, ShoppingCart, User } from "lucide-react";
+import { DivineLogo } from "@/components/divine-logo";
 
 const links = [
   { href: "/", label: "Home" },
@@ -13,17 +14,8 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-50 bg-[#f7fbff]">
       <div className="mx-auto flex h-[58px] w-full max-w-[1440px] items-center justify-between px-[30px]">
-        <Link href="/" className="flex items-center gap-[5px]" aria-label="Divine Aminos home">
-          <span className="relative h-[18px] w-[24px] text-[#071326]">
-            <span className="absolute left-0 top-[4px] h-[10px] w-[10px] rounded-[2px] bg-current" />
-            <span className="absolute left-[9px] top-[2px] h-[14px] w-[14px] rounded-full border-[5px] border-current" />
-          </span>
-          <span className="leading-[0.78] text-[#071326]">
-            <span className="block text-[28px] font-black tracking-[-0.04em]">divine</span>
-            <span className="ml-[42px] block text-[10px] font-semibold tracking-[-0.02em]">
-              aminos
-            </span>
-          </span>
+        <Link href="/" aria-label="Divine Aminos home">
+          <DivineLogo color="dark" size="nav" />
         </Link>
 
         <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-[20px] text-[10px] font-medium text-[#071326] md:flex">

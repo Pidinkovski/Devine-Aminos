@@ -54,3 +54,27 @@ html {
 .focus-ring:focus-visible {
   box-shadow: 0 0 0 4px rgba(90, 199, 232, 0.35);
 }
+
+@keyframes promo-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 12px));
+  }
+}
+
+.promo-marquee {
+  animation: promo-marquee 22s linear infinite;
+}
+
+.promo-marquee:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-marquee {
+    animation: none;
+  }
+}

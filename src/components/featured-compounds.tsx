@@ -34,23 +34,27 @@ const promoItems = [
   { icon: Truck, label: "Free Shipping on Orders Over $150", width: "w-[388px]" },
 ];
 
+const promoLoopItems = [...promoItems, ...promoItems];
+
 export function FeaturedCompounds() {
   return (
     <section className="relative isolate flex flex-col items-center gap-10 overflow-hidden bg-white px-8 py-[72px]">
       <div className="pointer-events-none absolute left-0 top-[59px] z-20 h-[82px] w-full bg-[linear-gradient(90deg,#FFFFFF_0%,rgba(255,255,255,0)_30.77%,rgba(255,255,255,0)_74.52%,#FFFFFF_100%)]" />
 
-      <div className="relative z-0 flex h-14 w-full max-w-[1376px] items-start gap-6 overflow-hidden bg-white">
-        {promoItems.map(({ icon: Icon, label, width }, index) => (
-          <div
-            key={`${label}-${index}`}
-            className={`${width} flex h-14 flex-none items-center justify-center gap-2.5 rounded-lg bg-[#F6F8FB] px-4 py-3`}
-          >
-            <Icon className="h-8 w-8 text-black" strokeWidth={2.2} />
-            <p className="font-[family-name:var(--font-plus-jakarta-sans)] text-xl font-medium leading-[115%] tracking-[-0.03em] text-[#0C0C0D]">
-              {label}
-            </p>
-          </div>
-        ))}
+      <div className="relative z-0 h-14 w-full max-w-[1376px] overflow-hidden bg-white">
+        <div className="promo-marquee flex w-max items-start gap-6">
+          {promoLoopItems.map(({ icon: Icon, label, width }, index) => (
+            <div
+              key={`${label}-${index}`}
+              className={`${width} flex h-14 flex-none items-center justify-center gap-2.5 rounded-lg bg-[#F6F8FB] px-4 py-3`}
+            >
+              <Icon className="h-8 w-8 text-black" strokeWidth={2.2} />
+              <p className="font-[family-name:var(--font-plus-jakarta-sans)] text-xl font-medium leading-[115%] tracking-[-0.03em] text-[#0C0C0D]">
+                {label}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="relative z-10 flex w-full max-w-[1280px] flex-col items-center gap-10">

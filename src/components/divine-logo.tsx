@@ -5,10 +5,10 @@ type DivineLogoProps = {
 
 const logoSizes = {
   nav: {
-    root: "h-[31px] w-[107px] gap-[5px]",
-    mark: "h-[18px] w-[24px]",
-    word: "text-[28px]",
-    sub: "ml-[42px] mt-[-3px] text-[10px]",
+    root: "h-[35px] w-[112px] gap-[5px]",
+    mark: "h-[20px] w-[25px]",
+    word: "text-[29px]",
+    sub: "ml-[43px] mt-[-3px] text-[10px]",
   },
   footer: {
     root: "h-[52px] w-[179px] gap-[9px]",

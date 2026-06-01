@@ -185,6 +185,7 @@ export default function PeptidesPage() {
 
       {selectedProduct ? (
         <ProductDetailsModal
+          key={`${selectedProduct.product.slug}-${selectedProduct.name}`}
           item={selectedProduct}
           onClose={() => setSelectedProduct(null)}
           onSelectRelated={setSelectedProduct}
@@ -235,6 +236,56 @@ function ProductDetailsModal({
   onSelectRelated: (item: ProductListingCard) => void;
 }) {
   const title = item.name === "BPC-157" ? "BPC-157 5MG" : item.name;
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+  const [cartMessage, setCartMessage] = useState("");
+
+  function updateQuantity(nextQuantity: number) {
+    setCartMessage("");
+    setQuantity(Math.max(1, nextQuantity));
+  }
+
+  function addToCart() {
+    const savedCart = JSON.parse(
+      window.localStorage.getItem("divineAminosCart") ?? "[]",
+    ) as Array<{
+      id: string;
+      slug: string;
+      name: string;
+      price: number;
+      quantity: number;
+      meta: string;
+      addedAt: string;
+    }>;
+    const cartId = `${item.product.slug}-${item.name.toLowerCase().replace(/\s+/g, "-")}`;
+
+    const existingIndex = savedCart.findIndex(
+      (cartItem) => cartItem.id === cartId,
+    );
+    const nextCart = [...savedCart];
+
+    if (existingIndex >= 0) {
+      nextCart[existingIndex] = {
+        ...nextCart[existingIndex],
+        quantity: nextCart[existingIndex].quantity + quantity,
+        addedAt: new Date().toISOString(),
+      };
+    } else {
+      nextCart.push({
+        id: cartId,
+        slug: item.product.slug,
+        name: title,
+        price: priceValue(item.price),
+        quantity,
+        meta: item.meta,
+        addedAt: new Date().toISOString(),
+      });
+    }
+
+    window.localStorage.setItem("divineAminosCart", JSON.stringify(nextCart));
+    window.dispatchEvent(new CustomEvent("divine-cart-updated", { detail: nextCart }));
+    setCartMessage(`${quantity} ${quantity === 1 ? "item" : "items"} added to cart`);
+  }
 
   return (
     <div
@@ -272,22 +323,29 @@ function ProductDetailsModal({
                   item={item}
                   className="h-[502px] rounded-[32px] border"
                   large
+                  variantIndex={selectedImageIndex}
                 />
                 <div className="flex h-[90.91px] gap-2.5">
                   {[0, 1, 2].map((index) => (
-                    <div
+                    <button
                       key={index}
-                      className="grid h-[90.91px] w-[92px] place-items-center overflow-hidden rounded-xl border border-[#E2E8F0]"
+                      aria-label={`Show ${title} image ${index + 1}`}
+                      aria-pressed={selectedImageIndex === index}
+                      className={`grid h-[90.91px] w-[92px] place-items-center overflow-hidden rounded-xl border transition ${
+                        selectedImageIndex === index
+                          ? "border-[#6FA8DF] ring-2 ring-[#E6F3FF]"
+                          : "border-[#E2E8F0] hover:border-[#6FA8DF]/70"
+                      }`}
+                      onClick={() => setSelectedImageIndex(index)}
                       style={{ background: item.gradient }}
+                      type="button"
                     >
                       <Bottle
                         product={item.product}
                         active={false}
-                        className={`h-[92px] w-[40px] rotate-0 scale-[0.88] ${
-                          index === 2 ? "rotate-[44deg]" : ""
-                        }`}
+                        className={getBottleVariantClass(index, true)}
                       />
-                    </div>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -328,9 +386,24 @@ function ProductDetailsModal({
                   <div className="flex flex-col gap-1">
                     <Label>Quantity</Label>
                     <div className="flex h-[46px] w-32 items-center justify-between rounded-xl bg-[rgba(226,232,240,0.3)] px-4 pb-3.5 pt-3 text-base font-semibold leading-5 text-[#999999]">
-                      <MinusIcon />
-                      <span>1</span>
-                      <PlusIcon />
+                      <button
+                        aria-label="Decrease quantity"
+                        className="grid size-5 place-items-center transition hover:text-[#1B2537]"
+                        disabled={quantity === 1}
+                        onClick={() => updateQuantity(quantity - 1)}
+                        type="button"
+                      >
+                        <MinusIcon />
+                      </button>
+                      <span aria-live="polite">{quantity}</span>
+                      <button
+                        aria-label="Increase quantity"
+                        className="grid size-5 place-items-center transition hover:text-[#1B2537]"
+                        onClick={() => updateQuantity(quantity + 1)}
+                        type="button"
+                      >
+                        <PlusIcon />
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -338,10 +411,16 @@ function ProductDetailsModal({
                 <div className="flex flex-col gap-4">
                   <button
                     className="h-[46px] w-full rounded-xl bg-[#1B2537] px-6 py-3 text-base font-semibold leading-[140%] tracking-[-0.01em] text-white"
+                    onClick={addToCart}
                     type="button"
                   >
                     Add to Cart
                   </button>
+                  {cartMessage ? (
+                    <p className="text-center text-sm font-semibold text-[#64B19A]">
+                      {cartMessage}
+                    </p>
+                  ) : null}
                   <a
                     className="flex h-5 items-center justify-center gap-2 text-sm font-bold leading-[17px] tracking-[0.7px] text-[#6FA8DF]"
                     href={item.product.coaUrl}
@@ -434,10 +513,12 @@ function ProductImagePanel({
   item,
   className,
   large = false,
+  variantIndex = 0,
 }: {
   item: ProductListingCard;
   className: string;
   large?: boolean;
+  variantIndex?: number;
 }) {
   return (
     <div
@@ -455,14 +536,26 @@ function ProductImagePanel({
       <Bottle
         product={item.product}
         active={false}
-        className={
-          large
-            ? "h-[420px] w-[180px] translate-y-16 rotate-0 scale-[1.2]"
-            : item.bottleClassName
-        }
+        className={large ? getBottleVariantClass(variantIndex) : item.bottleClassName}
       />
     </div>
   );
+}
+
+function getBottleVariantClass(index: number, thumbnail = false) {
+  if (thumbnail) {
+    return [
+      "h-[108px] w-[46px] translate-y-8 rotate-0 scale-[0.9]",
+      "h-[92px] w-[40px] translate-y-4 rotate-0 scale-[0.86]",
+      "h-[88px] w-[38px] translate-x-1 translate-y-3 rotate-[44deg] scale-[0.82]",
+    ][index] ?? "h-[108px] w-[46px] translate-y-8 rotate-0 scale-[0.9]";
+  }
+
+  return [
+    "h-[420px] w-[180px] translate-y-16 rotate-0 scale-[1.2]",
+    "h-[330px] w-[142px] translate-y-8 rotate-0 scale-[1.04]",
+    "h-[300px] w-[130px] translate-x-4 translate-y-5 rotate-[44deg] scale-[0.98]",
+  ][index] ?? "h-[420px] w-[180px] translate-y-16 rotate-0 scale-[1.2]";
 }
 
 function ProductTitleRow({

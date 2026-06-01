@@ -35,11 +35,23 @@ const faqItems = [
   },
 ];
 
-export function HomeFaq() {
+export function HomeFaq({
+  id = "faq",
+  topPadding = false,
+}: {
+  id?: string;
+  topPadding?: boolean;
+}) {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section className="flex w-full flex-col items-center gap-2.5 bg-white px-8 pb-[72px]">
+    <section
+      className={[
+        "flex w-full flex-col items-center gap-2.5 bg-white px-8 pb-[72px]",
+        topPadding ? "pt-[72px]" : "",
+      ].join(" ")}
+      id={id}
+    >
       <div className="flex min-h-[666px] w-full max-w-[1280px] flex-col justify-between gap-10 rounded-[32px] bg-[#F4F8FB] px-8 py-14 lg:flex-row lg:items-start lg:px-14 lg:py-[86px]">
         <div className="mx-auto flex w-full max-w-[450px] flex-col items-start gap-6 lg:mx-0">
           <div className="flex w-full flex-col items-start justify-center gap-6">

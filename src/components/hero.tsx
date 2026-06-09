@@ -1,50 +1,118 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { Bottle } from "@/components/bottle";
-import { products } from "@/data/products";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
-const heroBottles = [
-  { product: products[0], className: "z-20 rotate-0 scale-[1.08]" },
-  {
-    product: products[1],
-    className: "z-10 -ml-5 -rotate-[10deg] translate-y-10 scale-[1.02] sm:-ml-9",
-  },
-  {
-    product: products[2],
-    className: "z-20 -ml-4 rotate-0 translate-y-6 scale-[1.02] sm:-ml-8",
-  },
-  {
-    product: products[3],
-    className: "z-10 -ml-4 rotate-0 translate-y-2 scale-[1.02] sm:-ml-8",
-  },
-];
+type HeroBottleKey = "orange" | "purple" | "green" | "blue";
 
 const defaultHeroBackground =
   "linear-gradient(180deg, #BED0E1 0%, #E2F1FB 100%)";
 
-const productBackgrounds: Record<string, string> = {
-  "bpc-157": "linear-gradient(180deg, #FFE7C8 0%, #FFFFFF 100%)",
-  "tb-500": "linear-gradient(180deg, #E6DCF6 0%, #FFFFFF 100%)",
-  "ghk-cu": "linear-gradient(180deg, #D7FFF9 0%, #FFFFFF 100%)",
-  "cjc-1295": "linear-gradient(180deg, #D3E5FF 0%, #FFFFFF 100%)",
+const heroStates: Array<{
+  key: HeroBottleKey | "default";
+  src: string;
+  alt: string;
+}> = [
+  {
+    key: "default",
+    src: "/hero/whole.png",
+    alt: "Divine Aminos peptide bottles",
+  },
+  {
+    key: "orange",
+    src: "/hero/orange-opened.png",
+    alt: "Glutathione bottle opened",
+  },
+  {
+    key: "purple",
+    src: "/hero/purple-opened-v2-bgcut.png",
+    alt: "NAD+ bottle opened",
+  },
+  {
+    key: "green",
+    src: "/hero/green-opened-v2-bgcut.png",
+    alt: "GHK-CU bottle opened",
+  },
+  {
+    key: "blue",
+    src: "/hero/blue-opened-v2-bgcut.png",
+    alt: "BPC-157 bottle opened",
+  },
+];
+
+const bottleTriggers: Array<{
+  key: HeroBottleKey;
+  label: string;
+  className: string;
+}> = [
+  {
+    key: "orange",
+    label: "Open Glutathione bottle",
+    className: "left-[7%] top-[10%] h-[78%] w-[22%]",
+  },
+  {
+    key: "purple",
+    label: "Open NAD+ bottle",
+    className: "left-[28%] top-[12%] h-[78%] w-[21%]",
+  },
+  {
+    key: "green",
+    label: "Open GHK-CU bottle",
+    className: "left-[50%] top-[9%] h-[80%] w-[21%]",
+  },
+  {
+    key: "blue",
+    label: "Open BPC-157 bottle",
+    className: "left-[73%] top-[7%] h-[82%] w-[22%]",
+  },
+];
+
+const activeHeroContent: Record<
+  HeroBottleKey,
+  { background: string; cta: string }
+> = {
+  orange: {
+    background: "linear-gradient(180deg, #FFE7C8 0%, #FFFFFF 100%)",
+    cta: "Browse Glutathione Peptides",
+  },
+  purple: {
+    background: "linear-gradient(180deg, #E6DCF6 0%, #FFFFFF 100%)",
+    cta: "Browse NAD+ Peptides",
+  },
+  green: {
+    background: "linear-gradient(180deg, #D7FFF9 0%, #FFFFFF 100%)",
+    cta: "Browse GHK-CU Peptides",
+  },
+  blue: {
+    background: "linear-gradient(180deg, #D3E5FF 0%, #FFFFFF 100%)",
+    cta: "Browse BPC-157 Peptides",
+  },
 };
 
 export function Hero() {
-  const [activeSlug, setActiveSlug] = useState<string | null>(null);
-  const active = products.find((product) => product.slug === activeSlug);
-  const heroBackground = activeSlug
-    ? productBackgrounds[activeSlug] ?? active?.bg ?? defaultHeroBackground
+  const [activeBottle, setActiveBottle] = useState<HeroBottleKey | null>(null);
+  const heroBackground = activeBottle
+    ? activeHeroContent[activeBottle].background
     : defaultHeroBackground;
+  const primaryCta = activeBottle
+    ? activeHeroContent[activeBottle].cta
+    : "Browse All Peptides";
+
+  useEffect(() => {
+    heroStates.forEach((state) => {
+      const image = new window.Image();
+      image.src = state.src;
+    });
+  }, []);
 
   return (
     <section
-      className="relative isolate h-[clamp(760px,80.14vw,1096px)] overflow-hidden transition-colors duration-700"
+      className="relative isolate h-[1040px] overflow-hidden transition-colors duration-500"
       style={{ background: heroBackground }}
     >
-      <div className="section-shell relative flex h-full flex-col items-center px-2 pb-[72px] pt-[70px]">
-        <div className="mx-auto flex w-full max-w-[750px] flex-col items-center text-center">
+      <div className="section-shell relative flex h-full flex-col items-center px-2 py-[72px]">
+        <div className="mx-auto flex h-[306px] w-full max-w-[750px] flex-col items-center text-center">
           <h1 className="max-w-[750px] font-[family-name:var(--font-plus-jakarta-sans)] text-[48px] font-semibold leading-[115%] tracking-[-0.03em] text-[#1B2537] sm:text-[60px] lg:text-[72px]">
             Precision Peptides for
             <br />
@@ -60,7 +128,7 @@ export function Hero() {
               href="/peptides"
               className="focus-ring inline-flex h-[42px] items-center justify-center rounded-xl bg-[#1B2537] px-6 font-[family-name:var(--font-plus-jakarta-sans)] text-base font-semibold leading-[140%] tracking-[-0.01em] text-white transition hover:-translate-y-0.5 hover:bg-[#253148]"
             >
-              Browse All Peptides
+              {primaryCta}
             </Link>
             <Link
               href="/research"
@@ -71,27 +139,44 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="absolute left-1/2 top-[420px] flex w-[min(974px,calc(100%-64px))] -translate-x-1/2 items-end justify-center pb-7 sm:top-[430px] lg:top-[429px]">
-          {heroBottles.map(({ product, className }) => {
-            const isActive = product.slug === activeSlug;
+        <div className="absolute left-1/2 top-[417px] z-10 aspect-[974/551] w-[min(974px,calc(100%-64px))] -translate-x-1/2 overflow-visible">
+          {heroStates.map((state) => {
+            const isVisible =
+              state.key === (activeBottle ?? "default");
 
             return (
-              <button
-                key={product.slug}
-                onClick={() => setActiveSlug(product.slug)}
-                className="focus-ring shrink-0 rounded-xl p-0 transition duration-500 hover:-translate-y-2"
-                aria-label={`Show ${product.name}`}
-              >
-                <Bottle
-                  product={product}
-                  active={false}
-                  className={`${className} h-[260px] w-[112px] sm:h-[285px] sm:w-[122px] lg:h-[430px] lg:w-[184px] xl:h-[520px] xl:w-[223px] ${
-                    isActive ? "brightness-105" : ""
-                  }`}
-                />
-              </button>
+              <Image
+                key={state.key}
+                src={state.src}
+                alt={state.alt}
+                aria-hidden={!isVisible}
+                fill
+                priority
+                sizes="974px"
+                className={`object-contain object-center ${
+                  isVisible ? "opacity-100" : "opacity-0"
+                }`}
+                draggable={false}
+              />
             );
           })}
+
+          <div className="absolute inset-0 z-20">
+            {bottleTriggers.map((trigger) => (
+              <button
+                key={trigger.key}
+                aria-label={trigger.label}
+                aria-pressed={activeBottle === trigger.key}
+                className={`absolute rounded-3xl outline-none ${trigger.className}`}
+                onClick={() =>
+                  setActiveBottle((current) =>
+                    current === trigger.key ? null : trigger.key,
+                  )
+                }
+                type="button"
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

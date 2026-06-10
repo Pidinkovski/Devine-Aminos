@@ -60,7 +60,7 @@ export function Nav() {
             Search
           </button>
           <Link
-            href="/peptides"
+            href="/cart"
             className="focus-ring relative inline-flex items-center justify-center"
             aria-label={`Cart${cartCount ? `, ${cartCount} items` : ""}`}
           >

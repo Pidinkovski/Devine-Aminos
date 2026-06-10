@@ -1,6 +1,6 @@
 type DivineLogoProps = {
   color?: "dark" | "light";
-  size?: "nav" | "footer";
+  size?: "nav" | "footer" | "auth";
 };
 
 const logoSizes = {
@@ -15,6 +15,12 @@ const logoSizes = {
     mark: "h-[30px] w-[40px]",
     word: "text-[47px]",
     sub: "ml-[72px] mt-[-6px] text-[13px]",
+  },
+  auth: {
+    root: "h-[52px] w-[166px] gap-[8px]",
+    mark: "h-[30px] w-[38px]",
+    word: "text-[43px]",
+    sub: "ml-[66px] mt-[-6px] text-[13px]",
   },
 };
 

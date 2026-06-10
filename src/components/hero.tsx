@@ -16,28 +16,28 @@ const heroStates: Array<{
 }> = [
   {
     key: "default",
-    src: "/hero/whole.png",
+    src: "/hero/whole-closed-hero.png",
     alt: "Divine Aminos peptide bottles",
   },
   {
     key: "orange",
-    src: "/hero/orange-opened.png",
+    src: "/hero/orangebottle-open.png",
     alt: "Glutathione bottle opened",
   },
   {
     key: "purple",
-    src: "/hero/purple-opened-v2-bgcut.png",
+    src: "/hero/purplebottle-open.png",
     alt: "NAD+ bottle opened",
   },
   {
     key: "green",
-    src: "/hero/green-opened-v2-bgcut.png",
-    alt: "GHK-CU bottle opened",
+    src: "/hero/whole-closed-hero.png",
+    alt: "Divine Aminos peptide bottles with GHK-CU selected",
   },
   {
     key: "blue",
-    src: "/hero/blue-opened-v2-bgcut.png",
-    alt: "BPC-157 bottle opened",
+    src: "/hero/whole-closed-hero.png",
+    alt: "Divine Aminos peptide bottles with BPC-157 selected",
   },
 ];
 

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, FileCheck2, PackageCheck, ShieldAlert, Truck } from "lucide-react";
 import { Bottle } from "@/components/bottle";
+import { ProductDetailCartActions } from "@/components/product-detail-cart-actions";
 import { getProduct, products } from "@/data/products";
 
 type PageProps = {
@@ -50,24 +51,7 @@ export default async function ProductPage({ params }: PageProps) {
               ))}
             </div>
 
-            <div className="mt-8 rounded-lg border border-slate-200 bg-slate-50 p-5">
-              <p className="text-sm font-black uppercase tracking-[0.18em] text-slate-500">
-                Quantity
-              </p>
-              <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                {product.dosage.map((option) => (
-                  <button key={option} className="focus-ring rounded-md border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition hover:border-slate-950">
-                    {option}
-                  </button>
-                ))}
-              </div>
-              <div className="mt-5 flex items-center justify-between border-t border-slate-200 pt-5">
-                <span className="text-3xl font-black text-slate-950">${product.price}</span>
-                <button className="focus-ring rounded-full bg-slate-950 px-6 py-3 text-sm font-bold text-white">
-                  Request checkout
-                </button>
-              </div>
-            </div>
+            <ProductDetailCartActions product={product} />
 
             <div className="mt-6 grid gap-3">
               <Info icon={<FileCheck2 size={20} />} title="CoA PDF link" copy="Stable route for QR labels. Replace the placeholder with the final certificate PDF when ready." href={product.coaUrl} />

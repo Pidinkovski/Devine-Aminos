@@ -30,6 +30,21 @@ export const products: Product[] = [
     coaUrl: "/coa/bpc-157",
   },
   {
+    slug: "glutathione",
+    name: "Glutathione",
+    shortName: "GSH",
+    price: 35,
+    color: "#f28b47",
+    accent: "orange",
+    bg: "#fff3df",
+    tag: "Longevity research",
+    benefits: ["Oxidative stress models", "Cellular redox studies", "Longevity assays"],
+    description:
+      "A research compound studied in cellular redox balance, oxidative stress models, and controlled longevity-focused laboratory assays.",
+    dosage: ["200 mg vial", "500 mg vial", "Research bundle"],
+    coaUrl: "/coa/glutathione",
+  },
+  {
     slug: "tb-500",
     name: "TB-500",
     shortName: "TB",

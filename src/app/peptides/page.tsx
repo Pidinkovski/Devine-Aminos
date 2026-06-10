@@ -23,7 +23,7 @@ type ProductListingCard = {
 };
 
 const ghk = products.find((product) => product.slug === "ghk-cu")!;
-const orange = products.find((product) => product.slug === "bpc-157")!;
+const orange = products.find((product) => product.slug === "glutathione")!;
 const blue = {
   ...products.find((product) => product.slug === "bpc-157")!,
   color: "#6FA8DF",
@@ -255,6 +255,8 @@ function ProductDetailsModal({
       price: number;
       quantity: number;
       meta: string;
+      detailHref?: string;
+      gradient?: string;
       addedAt: string;
     }>;
     const cartId = `${item.product.slug}-${item.name.toLowerCase().replace(/\s+/g, "-")}`;
@@ -267,6 +269,12 @@ function ProductDetailsModal({
     if (existingIndex >= 0) {
       nextCart[existingIndex] = {
         ...nextCart[existingIndex],
+        slug: item.product.slug,
+        name: title,
+        price: priceValue(item.price),
+        meta: item.meta,
+        detailHref: `/peptides/${item.product.slug}`,
+        gradient: item.gradient,
         quantity: nextCart[existingIndex].quantity + quantity,
         addedAt: new Date().toISOString(),
       };
@@ -278,6 +286,8 @@ function ProductDetailsModal({
         price: priceValue(item.price),
         quantity,
         meta: item.meta,
+        detailHref: `/peptides/${item.product.slug}`,
+        gradient: item.gradient,
         addedAt: new Date().toISOString(),
       });
     }

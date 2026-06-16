@@ -31,7 +31,7 @@ export default async function ProductPage({ params }: PageProps) {
         <div className="mt-8 grid gap-10 lg:grid-cols-[0.9fr_1fr]">
           <div className="relative grid min-h-[560px] place-items-center overflow-hidden rounded-lg" style={{ background: product.bg }}>
             <div className="absolute inset-0 soft-grid opacity-70" />
-            <Bottle product={product} active className="scale-125" />
+            <Bottle product={product} active imageFit="detail" className="scale-125" />
           </div>
 
           <div>

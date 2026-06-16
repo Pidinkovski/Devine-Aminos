@@ -12,14 +12,14 @@ const featuredProducts = [
     gradient: "linear-gradient(180deg, #D7FFF9 0%, #FFFFFF 100%)",
   },
   {
-    product: products.find((product) => product.slug === "bpc-157")!,
+    product: products.find((product) => product.slug === "glutathione")!,
     name: "Glutathione",
     price: "$35.00",
     meta: "Purity: >99% | 200mg Vial",
     gradient: "linear-gradient(180deg, #FFE7C8 0%, #FFFFFF 100%), #F2F4F6",
   },
   {
-    product: products.find((product) => product.slug === "cjc-1295")!,
+    product: products.find((product) => product.slug === "bpc-157")!,
     name: "BPC-157",
     price: "$45.00",
     meta: "Purity: >99% | 5mg Vial",
@@ -105,6 +105,7 @@ function FeaturedCard({
         <Bottle
           product={product}
           active={false}
+          imageFit="figma-card"
           className="h-[250px] w-[108px] translate-y-7 rotate-0 scale-[1.12]"
         />
       </div>

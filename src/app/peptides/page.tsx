@@ -36,7 +36,7 @@ const listingProducts: ProductListingCard[] = [
     price: "$55.00",
     meta: "Purity: >99% | 10mg Vial",
     category: "Repair",
-    popularity: 84,
+    popularity: 96,
     gradient: "linear-gradient(180deg, #D7FFF9 0%, #FFFFFF 100%)",
     badge: { label: "Repair", background: "rgba(112, 211, 182, 0.3)", color: "#64B19A" },
     bottleClassName: "h-[250px] w-[108px] translate-y-7 rotate-0 scale-[1.12]",
@@ -47,7 +47,7 @@ const listingProducts: ProductListingCard[] = [
     price: "$35.00",
     meta: "Purity: >99% | 200mg Vial",
     category: "Longevity",
-    popularity: 72,
+    popularity: 88,
     gradient: "linear-gradient(180deg, #FFE7C8 0%, #FFFFFF 100%), #F2F4F6",
     badge: { label: "Longevity", background: "rgba(243, 138, 93, 0.2)", color: "#F38A5D" },
     bottleClassName: "h-[244px] w-[104px] translate-y-8 rotate-0 scale-[1.08]",
@@ -58,7 +58,7 @@ const listingProducts: ProductListingCard[] = [
     price: "$45.00",
     meta: "Purity: >99% | 5mg Vial",
     category: (index === 3 ? "Performance" : "Repair") as ProductListingCard["category"],
-    popularity: [96, 88, 64, 51][index],
+    popularity: [84, 72, 64, 51][index],
     gradient: "linear-gradient(180deg, #D3E5FF 0%, #FFFFFF 100%), #F2F4F6",
     badge:
       index === 3
@@ -169,7 +169,13 @@ export default function PeptidesPage() {
             </div>
           </div>
 
-          <div className="grid w-full gap-x-5 gap-y-[14px] md:grid-cols-2 xl:grid-cols-3">
+          <div
+            className="grid w-full justify-center gap-x-5 gap-y-[14px]"
+            style={{
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(min(100%, 413.33px), 413.33px))",
+            }}
+          >
             {filteredProducts.map((item, index) => (
               <ProductListingCard
                 key={`${item.name}-${index}`}
@@ -203,7 +209,7 @@ function ProductListingCard({
   onViewDetails: () => void;
 }) {
   return (
-    <article className="isolate flex h-[478.7px] min-w-0 flex-col items-start overflow-hidden rounded-[32px] border border-[#E2E8F0] bg-white">
+    <article className="isolate flex h-[478.7px] w-full max-w-[413.33px] flex-col items-start overflow-hidden rounded-[32px] border border-[#E2E8F0] bg-white">
       <ProductImagePanel item={item} className="h-[294.5px]" />
 
       <div className="flex h-[182.19px] w-full flex-col items-start p-6">
@@ -546,6 +552,7 @@ function ProductImagePanel({
       <Bottle
         product={item.product}
         active={false}
+        imageFit={large ? "detail" : "figma-card"}
         className={large ? getBottleVariantClass(variantIndex) : item.bottleClassName}
       />
     </div>

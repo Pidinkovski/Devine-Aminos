@@ -11,7 +11,7 @@ export function ProductCard({ product }: { product: Product }) {
     >
       <div className="relative grid min-h-72 place-items-center overflow-hidden" style={{ background: product.bg }}>
         <div className="absolute inset-0 soft-grid opacity-60" />
-        <Bottle product={product} className="scale-90" />
+        <Bottle product={product} imageFit="figma-card" className="scale-90" />
       </div>
       <div className="p-5">
         <div className="flex items-start justify-between gap-4">

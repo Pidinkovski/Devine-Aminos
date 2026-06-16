@@ -11,6 +11,13 @@ export type Product = {
   description: string;
   dosage: string[];
   coaUrl: string;
+  imageSrc?: string;
+  cardImage?: {
+    width: number;
+    height: number;
+    left: number;
+    top: number;
+  };
 };
 
 export const products: Product[] = [
@@ -19,15 +26,17 @@ export const products: Product[] = [
     name: "BPC-157",
     shortName: "BPC",
     price: 79,
-    color: "#f28b47",
-    accent: "orange",
-    bg: "#fff2e9",
+    color: "#6FA8DF",
+    accent: "blue",
+    bg: "#e8f3ff",
     tag: "Recovery research",
     benefits: ["Tissue models", "Inflammation studies", "Gastrointestinal research"],
     description:
       "A research peptide commonly referenced in tissue repair, inflammatory response, and gastrointestinal model studies.",
     dosage: ["5 mg vial", "10 mg vial", "Research bundle"],
     coaUrl: "/coa/bpc-157",
+    imageSrc: "/products/bpc-157-bottle.png",
+    cardImage: { width: 241, height: 268, left: 76.67, top: 27 },
   },
   {
     slug: "glutathione",
@@ -43,6 +52,8 @@ export const products: Product[] = [
       "A research compound studied in cellular redox balance, oxidative stress models, and controlled longevity-focused laboratory assays.",
     dosage: ["200 mg vial", "500 mg vial", "Research bundle"],
     coaUrl: "/coa/glutathione",
+    imageSrc: "/products/glutathione-bottle.png",
+    cardImage: { width: 181, height: 251, left: 115.17, top: 44 },
   },
   {
     slug: "tb-500",
@@ -73,6 +84,8 @@ export const products: Product[] = [
       "A copper-binding peptide studied in cellular signaling, extracellular matrix, and dermatological research models.",
     dosage: ["50 mg vial", "100 mg vial", "Research bundle"],
     coaUrl: "/coa/ghk-cu",
+    imageSrc: "/products/ghk-cu-bottle.png",
+    cardImage: { width: 211, height: 261, left: 105.5, top: 34 },
   },
   {
     slug: "cjc-1295",

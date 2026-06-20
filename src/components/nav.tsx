@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { DivineLogo } from "@/components/divine-logo";
+import { products } from "@/data/products";
 
 const links = [
   { href: "/", label: "Home" },
@@ -18,7 +20,35 @@ type CartItem = {
 };
 
 export function Nav() {
+  const router = useRouter();
   const [cartCount, setCartCount] = useState(0);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const searchResults = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+
+    if (!query) {
+      return products.slice(0, 4);
+    }
+
+    return products
+      .filter((product) =>
+        [
+          product.name,
+          product.shortName,
+          product.tag,
+          product.description,
+          product.benefits.join(" "),
+          product.dosage.join(" "),
+        ]
+          .join(" ")
+          .toLowerCase()
+          .includes(query),
+      )
+      .slice(0, 5);
+  }, [searchQuery]);
 
   useEffect(() => {
     function syncCartCount() {
@@ -34,6 +64,29 @@ export function Nav() {
       window.removeEventListener("divine-cart-updated", syncCartCount);
     };
   }, []);
+
+  useEffect(() => {
+    if (!searchOpen) {
+      return;
+    }
+
+    const focusFrame = window.requestAnimationFrame(() => {
+      searchInputRef.current?.focus();
+    });
+
+    return () => window.cancelAnimationFrame(focusFrame);
+  }, [searchOpen]);
+
+  function submitSearch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const query = searchQuery.trim();
+    router.push(query ? `/peptides?search=${encodeURIComponent(query)}` : "/peptides");
+    window.dispatchEvent(
+      new CustomEvent("divine-product-search", { detail: query }),
+    );
+    setSearchOpen(false);
+  }
 
   return (
     <header className="sticky top-0 z-50 bg-[#F7FBFF]">
@@ -54,11 +107,72 @@ export function Nav() {
           ))}
         </nav>
 
-        <div className="flex h-6 w-[189px] items-center justify-end gap-8 text-[#0B1022]">
-          <button className="focus-ring hidden h-6 items-center gap-1.5 rounded-[3px] font-[family-name:var(--font-plus-jakarta-sans)] text-sm font-medium leading-[140%] tracking-[-0.01em] md:inline-flex">
+        <div className="relative flex h-6 w-[189px] items-center justify-end gap-8 text-[#0B1022]">
+          <button
+            aria-expanded={searchOpen}
+            className="focus-ring hidden h-6 items-center gap-1.5 rounded-[3px] font-[family-name:var(--font-plus-jakarta-sans)] text-sm font-medium leading-[140%] tracking-[-0.01em] md:inline-flex"
+            onClick={() => setSearchOpen((open) => !open)}
+            type="button"
+          >
             <Search size={24} strokeWidth={2} />
             Search
           </button>
+
+          {searchOpen ? (
+            <form
+              className="absolute right-20 top-10 z-50 w-[340px] overflow-hidden rounded-2xl border border-[#E2E8F0] bg-white p-2 font-[family-name:var(--font-plus-jakarta-sans)] shadow-[0_20px_60px_rgba(11,18,32,0.16)]"
+              onSubmit={submitSearch}
+            >
+              <label className="flex h-11 items-center gap-2 rounded-xl bg-[#F6F8FB] px-3 text-[#0B1022]">
+                <Search size={18} strokeWidth={2} />
+                <input
+                  ref={searchInputRef}
+                  className="min-w-0 flex-1 bg-transparent text-sm font-medium outline-none placeholder:text-[#999999]"
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  placeholder="Search peptides..."
+                  type="search"
+                  value={searchQuery}
+                />
+              </label>
+
+              <div className="mt-2 max-h-[280px] overflow-y-auto">
+                {searchResults.length ? (
+                  searchResults.map((product) => (
+                    <Link
+                      className="flex items-center justify-between gap-4 rounded-xl px-3 py-2.5 text-sm transition hover:bg-[#F6F8FB]"
+                      href={`/peptides/${product.slug}`}
+                      key={product.slug}
+                      onClick={() => setSearchOpen(false)}
+                    >
+                      <span>
+                        <span className="block font-semibold text-[#1B2537]">
+                          {product.name}
+                        </span>
+                        <span className="block text-xs font-medium text-[#777C83]">
+                          {product.tag}
+                        </span>
+                      </span>
+                      <span className="shrink-0 text-xs font-bold text-[#6FA8DF]">
+                        View
+                      </span>
+                    </Link>
+                  ))
+                ) : (
+                  <p className="px-3 py-4 text-sm font-medium text-[#777C83]">
+                    No matching peptides found.
+                  </p>
+                )}
+              </div>
+
+              <button
+                className="mt-2 flex h-10 w-full items-center justify-center rounded-xl bg-[#1B2537] text-sm font-semibold text-white transition hover:bg-[#253148]"
+                type="submit"
+              >
+                Search Products
+              </button>
+            </form>
+          ) : null}
+
           <Link
             href="/cart"
             className="focus-ring relative inline-flex items-center justify-center"

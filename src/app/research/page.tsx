@@ -103,20 +103,24 @@ export default function ResearchPage() {
           <div className="grid w-full gap-6 md:grid-cols-3">
             {mechanisms.map(({ icon: Icon, title, accent, badgeBackground, copy }) => (
               <article
-                className="flex min-h-[165px] flex-col items-start gap-2 rounded-[8px] border border-[#E2E8F0] bg-white p-6"
+                className="flex h-auto min-h-[232px] flex-col items-start gap-2 rounded-[32px] border border-[#E2E8F0] bg-white p-6"
                 key={title}
               >
                 <div className="flex h-[33px] w-full items-start justify-between pb-2">
                   <Icon className="h-[25px] w-[25px]" color={accent} strokeWidth={2} />
                   <span
-                    className="flex h-[25px] items-center rounded-lg px-3 py-1 text-xs font-semibold leading-[140%] tracking-[-0.01em]"
+                    className="flex h-[25px] w-[105px] items-center justify-center rounded-lg px-3 py-1 text-xs font-semibold leading-[140%] tracking-[-0.01em]"
                     style={{ background: badgeBackground, color: accent }}
                   >
                     PURITY: &gt;99%
                   </span>
                 </div>
-                <h3 className="text-xl font-bold leading-[130%] text-[#1B2537]">{title}</h3>
-                <p className="text-sm font-normal leading-[150%] text-[#45474C]">{copy}</p>
+                <h3 className="flex h-8 items-center text-2xl font-bold leading-[130%] text-[#1B2537]">
+                  {title}
+                </h3>
+                <p className="flex min-h-[72px] items-center text-base font-normal leading-6 text-[#45474C]">
+                  {copy}
+                </p>
               </article>
             ))}
           </div>

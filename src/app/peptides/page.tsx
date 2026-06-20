@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Bottle } from "@/components/bottle";
 import { Footer } from "@/components/footer";
 import { HomeFaq } from "@/components/home-faq";
@@ -80,9 +80,52 @@ export default function PeptidesPage() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [sortOption, setSortOption] = useState("Most Popular");
   const [sortOpen, setSortOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    function syncSearchQuery(event?: Event) {
+      if (event instanceof CustomEvent && typeof event.detail === "string") {
+        setSearchQuery(event.detail);
+        return;
+      }
+
+      setSearchQuery(new URLSearchParams(window.location.search).get("search") ?? "");
+    }
+
+    syncSearchQuery();
+    window.addEventListener("popstate", syncSearchQuery);
+    window.addEventListener("divine-product-search", syncSearchQuery);
+
+    return () => {
+      window.removeEventListener("popstate", syncSearchQuery);
+      window.removeEventListener("divine-product-search", syncSearchQuery);
+    };
+  }, []);
+
+  const normalizedSearchQuery = searchQuery.trim().toLowerCase();
 
   const filteredProducts = listingProducts
     .filter((item) => activeFilter === "All" || item.category === activeFilter)
+    .filter((item) => {
+      if (!normalizedSearchQuery) {
+        return true;
+      }
+
+      return [
+        item.name,
+        item.meta,
+        item.category,
+        item.product.name,
+        item.product.shortName,
+        item.product.tag,
+        item.product.description,
+        item.product.benefits.join(" "),
+        item.product.dosage.join(" "),
+      ]
+        .join(" ")
+        .toLowerCase()
+        .includes(normalizedSearchQuery);
+    })
     .sort((a, b) => {
       if (sortOption === "Least Popular") {
         return a.popularity - b.popularity;
@@ -169,6 +212,27 @@ export default function PeptidesPage() {
             </div>
           </div>
 
+          {searchQuery ? (
+            <div className="flex w-full items-center justify-between rounded-2xl bg-[#F6F8FB] px-4 py-3 text-sm font-medium text-[#777C83]">
+              <span>
+                Search results for{" "}
+                <strong className="font-semibold text-[#1B2537]">
+                  {searchQuery}
+                </strong>
+              </span>
+              <button
+                className="rounded-xl bg-white px-3 py-2 text-xs font-semibold text-[#1B2537] transition hover:bg-[#E6F3FF]"
+                onClick={() => {
+                  window.history.pushState(null, "", "/peptides");
+                  setSearchQuery("");
+                }}
+                type="button"
+              >
+                Clear Search
+              </button>
+            </div>
+          ) : null}
+
           <div
             className="grid w-full justify-center gap-x-5 gap-y-[14px]"
             style={{
@@ -184,6 +248,17 @@ export default function PeptidesPage() {
               />
             ))}
           </div>
+
+          {!filteredProducts.length ? (
+            <div className="flex min-h-[240px] w-full flex-col items-center justify-center rounded-[32px] border border-[#E2E8F0] bg-[#F6F8FB] text-center">
+              <h2 className="text-2xl font-semibold text-[#1B2537]">
+                No peptides found
+              </h2>
+              <p className="mt-2 max-w-[420px] text-sm font-medium leading-[150%] text-[#777C83]">
+                Try a product name, category, research use, or vial size.
+              </p>
+            </div>
+          ) : null}
         </div>
       </section>
 

@@ -47,7 +47,7 @@ const programTiers = [
 export default function AffiliatePage() {
   return (
     <>
-      <section className="relative z-10 isolate h-[clamp(760px,80.14vw,1096px)] overflow-visible bg-[linear-gradient(180deg,#BED0E1_0%,#E2F1FB_100%)] px-8 pb-[72px] pt-[70px] font-[family-name:var(--font-plus-jakarta-sans)]">
+      <section className="relative z-10 isolate h-[clamp(840px,80.14vw,1154px)] overflow-hidden bg-[linear-gradient(180deg,#BED0E1_0%,#E2F1FB_100%)] px-8 pb-[72px] pt-[130px] font-[family-name:var(--font-plus-jakarta-sans)]">
         <div className="mx-auto flex w-full max-w-[1280px] flex-col items-center">
           <div className="z-20 flex max-w-[750px] flex-col items-center gap-4 text-center">
             <h1 className="max-w-[750px] text-[48px] font-semibold leading-[115%] tracking-[-0.03em] text-[#1B2537] sm:text-[60px] lg:text-[72px]">
@@ -75,9 +75,9 @@ export default function AffiliatePage() {
 
           <Image
             alt="Affiliate program flow: join, share, customer purchase, and earn"
-            className="pointer-events-none absolute left-1/2 top-[371px] z-10 h-auto w-[1215px] max-w-[calc(100%-64px)] -translate-x-1/2 select-none"
+            className="pointer-events-none absolute bottom-0 left-1/2 z-10 h-auto w-[1215px] max-w-[calc(100%-64px)] -translate-x-1/2 select-none"
             draggable={false}
-            height={651}
+            height={768}
             id="affiliate-flow"
             src="/affiliate-group.svg"
             unoptimized

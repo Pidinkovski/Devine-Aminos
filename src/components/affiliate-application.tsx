@@ -56,7 +56,7 @@ export function AffiliateApplication() {
 
   return (
     <section
-      className="relative isolate h-[1090px] overflow-hidden bg-[#0B1222] font-[family-name:var(--font-plus-jakarta-sans)]"
+      className="relative isolate h-[1018px] overflow-hidden bg-[#0B1222] font-[family-name:var(--font-plus-jakarta-sans)]"
       id="program-application"
     >
       <Image

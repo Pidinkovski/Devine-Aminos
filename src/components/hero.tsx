@@ -108,11 +108,11 @@ export function Hero() {
 
   return (
     <section
-      className="relative isolate h-[1040px] overflow-hidden transition-colors duration-500"
+      className="relative isolate h-[1071px] overflow-hidden transition-colors duration-500"
       style={{ background: heroBackground }}
     >
-      <div className="section-shell relative flex h-full flex-col items-center px-2 py-[72px]">
-        <div className="mx-auto flex h-[306px] w-full max-w-[750px] flex-col items-center text-center">
+      <div className="section-shell relative flex h-full flex-col items-center px-2 pb-[72px] pt-[47px]">
+        <div className="relative z-30 mx-auto flex h-[333px] w-full max-w-[750px] flex-col items-center text-center">
           <h1 className="max-w-[750px] font-[family-name:var(--font-plus-jakarta-sans)] text-[48px] font-semibold leading-[115%] tracking-[-0.03em] text-[#1B2537] sm:text-[60px] lg:text-[72px]">
             Precision Peptides for
             <br />
@@ -139,7 +139,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="absolute left-1/2 top-[417px] z-10 aspect-[974/551] w-[min(974px,calc(100%-64px))] -translate-x-1/2 overflow-visible">
+        <div className="pointer-events-none absolute left-1/2 top-[334px] z-10 aspect-[974/551] w-[min(974px,calc(100%-64px))] -translate-x-1/2 overflow-visible">
           {heroStates.map((state) => {
             const isVisible =
               state.key === (activeBottle ?? "default");
@@ -153,7 +153,7 @@ export function Hero() {
                 fill
                 priority
                 sizes="974px"
-                className={`object-contain object-center ${
+                className={`pointer-events-none object-contain object-center ${
                   isVisible ? "opacity-100" : "opacity-0"
                 }`}
                 draggable={false}
@@ -161,13 +161,13 @@ export function Hero() {
             );
           })}
 
-          <div className="absolute inset-0 z-20">
+          <div className="pointer-events-none absolute inset-0 z-20">
             {bottleTriggers.map((trigger) => (
               <button
                 key={trigger.key}
                 aria-label={trigger.label}
                 aria-pressed={activeBottle === trigger.key}
-                className={`absolute rounded-3xl outline-none ${trigger.className}`}
+                className={`pointer-events-auto absolute rounded-3xl outline-none ${trigger.className}`}
                 onClick={() =>
                   setActiveBottle((current) =>
                     current === trigger.key ? null : trigger.key,

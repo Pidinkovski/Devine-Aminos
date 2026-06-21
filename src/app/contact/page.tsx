@@ -102,18 +102,18 @@ function ContactMap() {
 
 function ContactCta() {
   return (
-    <section className="flex min-h-[450px] w-full flex-col items-center justify-center bg-[#0B1222] px-8 py-[72px] font-[family-name:var(--font-plus-jakarta-sans)] text-white">
-      <div className="flex w-full max-w-[750px] flex-col items-center text-center">
-        <h2 className="max-w-[750px] text-5xl font-semibold leading-[115%] tracking-[-0.03em] sm:text-[60px] lg:text-[72px]">
+    <section className="flex h-[450px] w-full flex-col items-center justify-center bg-[#0B1222] px-8 py-[72px] font-[family-name:var(--font-plus-jakarta-sans)] text-white">
+      <div className="flex h-[306px] w-full max-w-[750px] flex-col items-center gap-4 text-center">
+        <h2 className="h-[166px] max-w-[750px] text-5xl font-semibold leading-[115%] tracking-[-0.03em] sm:text-[60px] lg:text-[72px]">
           Precision Peptides for
           <br />
           Next-Level Research
         </h2>
-        <p className="mt-4 max-w-[560px] text-lg font-medium leading-[150%] text-[rgba(226,232,240,0.7)]">
+        <p className="h-[54px] max-w-[560px] text-lg font-medium leading-[150%] text-[rgba(226,232,240,0.7)]">
           Divine Aminos provides amino and peptide compounds produced under
           rigorous standards to support breakthrough discoveries.
         </p>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-[6px] pt-3">
+        <div className="flex h-[54px] flex-wrap items-start justify-center gap-[6px] pt-3">
           <Link
             className="flex h-[42px] items-center justify-center rounded-xl bg-white px-6 text-base font-semibold leading-[140%] tracking-[-0.01em] text-[#0B1022] transition hover:-translate-y-0.5"
             href="/peptides"

@@ -5,6 +5,7 @@ import {
   Microscope,
   SprayCan,
 } from "lucide-react";
+import { HomeFaq } from "@/components/home-faq";
 
 const mechanisms = [
   {
@@ -61,9 +62,10 @@ const studies = Array.from({ length: 4 }, () => ({
 
 export default function ResearchPage() {
   return (
-    <main className="flex flex-col items-center bg-white px-8 py-[72px] font-[family-name:var(--font-plus-jakarta-sans)]">
-      <div className="flex w-full max-w-[1280px] flex-col items-center gap-[86px]">
-        <section className="grid min-h-[461px] w-full items-center gap-12 md:grid-cols-[minmax(320px,0.85fr)_minmax(0,1.15fr)] xl:grid-cols-[minmax(0,591.97px)_minmax(520px,660px)]">
+    <>
+      <main className="flex h-[2536.01px] flex-col items-center bg-white px-8 py-[72px] font-[family-name:var(--font-plus-jakarta-sans)]">
+      <div className="flex h-[2392.01px] w-full max-w-[1280px] flex-col items-center gap-[86px]">
+        <section className="grid h-[461px] w-full items-center gap-12 md:grid-cols-[minmax(320px,0.85fr)_minmax(0,1.15fr)] xl:grid-cols-[minmax(0,591.97px)_minmax(520px,660px)]">
           <div className="flex max-w-[380px] flex-col items-start gap-2 xl:max-w-[591.97px]">
             <h1 className="text-[40px] font-semibold leading-[110%] tracking-[-1px] text-[#0B1220] xl:text-5xl">
               Scientific Methodology
@@ -99,11 +101,11 @@ export default function ResearchPage() {
           />
         </section>
 
-        <ResearchSection title="Compound Mechanisms">
-          <div className="grid w-full gap-6 md:grid-cols-3">
+        <ResearchSection className="h-[313px]" title="Compound Mechanisms">
+          <div className="grid h-[232px] w-full gap-6 md:grid-cols-3">
             {mechanisms.map(({ icon: Icon, title, accent, badgeBackground, copy }) => (
               <article
-                className="flex h-auto min-h-[232px] flex-col items-start gap-2 rounded-[32px] border border-[#E2E8F0] bg-white p-6"
+                className="flex h-[232px] flex-col items-start gap-2 rounded-[32px] border border-[#E2E8F0] bg-white p-6"
                 key={title}
               >
                 <div className="flex h-[33px] w-full items-start justify-between pb-2">
@@ -126,9 +128,9 @@ export default function ResearchPage() {
           </div>
         </ResearchSection>
 
-        <ResearchSection title="Storage & Handling Protocol">
-          <div className="w-full overflow-hidden rounded-lg border border-[#E2E8F0] bg-white">
-            <table className="w-full table-fixed border-collapse">
+        <ResearchSection className="h-[287px]" title="Storage & Handling Protocol">
+          <div className="h-[206px] w-full overflow-hidden rounded-lg border border-[#E2E8F0] bg-white">
+            <table className="h-full w-full table-fixed border-collapse">
               <thead className="bg-[#F8FAFC]">
                 <tr className="border-b border-[#E2E8F0]">
                   <th className="px-4 py-4 text-left text-xs font-semibold uppercase leading-[14px] tracking-[0.6px] text-[#0B1220]">
@@ -164,7 +166,7 @@ export default function ResearchPage() {
           </div>
         </ResearchSection>
 
-        <section className="relative flex min-h-[239.01px] w-full flex-col gap-8 overflow-hidden rounded-2xl bg-[#0B1220] p-12 text-white md:flex-row md:items-center md:justify-between">
+        <section className="relative flex h-[239.01px] w-full flex-col gap-8 overflow-hidden rounded-2xl bg-[#0B1220] p-12 text-white md:flex-row md:items-center md:justify-between">
           <div className="absolute inset-0 bg-[linear-gradient(270deg,#DCE2F6_0%,#006BB2_100%)] opacity-10" />
           <div className="relative z-10 max-w-[672px]">
             <h2 className="text-[32px] font-semibold leading-[120%] tracking-[-0.32px]">
@@ -186,29 +188,33 @@ export default function ResearchPage() {
           </button>
         </section>
 
-        <ResearchSection id="studies" title="Clinical Studies & Peer-Reviewed Research">
-          <div className="grid w-full gap-2.5 lg:grid-cols-2">
+        <ResearchSection className="h-[748px] gap-[45px]" id="studies" title="Clinical Studies & Peer-Reviewed Research">
+          <div className="grid h-[646px] w-full gap-2.5 lg:grid-cols-2">
             {studies.map((study, index) => (
               <StudyCard key={`${study.category}-${index}`} {...study} />
             ))}
           </div>
         </ResearchSection>
       </div>
-    </main>
+      </main>
+      <HomeFaq />
+    </>
   );
 }
 
 function ResearchSection({
   children,
+  className = "",
   id,
   title,
 }: {
   children: React.ReactNode;
+  className?: string;
   id?: string;
   title: string;
 }) {
   return (
-    <section className="flex w-full flex-col items-start gap-6" id={id}>
+    <section className={`flex w-full flex-col items-start gap-6 ${className}`} id={id}>
       <div className="flex h-[57px] w-full items-start border-t border-[#E2E8F0] pt-6">
         <h2 className="text-2xl font-semibold leading-[130%] text-[#0B1220]">{title}</h2>
       </div>

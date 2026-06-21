@@ -66,7 +66,7 @@ export default function AffiliatePage() {
               </Link>
               <Link
                 className="flex h-[42px] items-center justify-center rounded-xl px-6 text-base font-medium leading-[140%] tracking-[-0.01em] text-[#0B1022]"
-                href="#affiliate-flow"
+                href="/research"
               >
                 Learn More
               </Link>
@@ -75,7 +75,7 @@ export default function AffiliatePage() {
 
           <Image
             alt="Affiliate program flow: join, share, customer purchase, and earn"
-            className="pointer-events-none absolute bottom-0 left-1/2 z-10 h-auto w-[1215px] max-w-[calc(100%-64px)] -translate-x-1/2 select-none"
+            className="pointer-events-none absolute left-1/2 top-[clamp(430px,34.93vw,503px)] z-10 h-auto w-[1215px] max-w-[calc(100%-64px)] -translate-x-1/2 select-none"
             draggable={false}
             height={768}
             id="affiliate-flow"

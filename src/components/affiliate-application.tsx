@@ -56,31 +56,32 @@ export function AffiliateApplication() {
 
   return (
     <section
-      className="relative isolate h-[1018px] overflow-hidden bg-[#0B1222] font-[family-name:var(--font-plus-jakarta-sans)]"
+      className="relative isolate h-[1090px] overflow-hidden bg-white font-[family-name:var(--font-plus-jakarta-sans)]"
       id="program-application"
     >
-      <Image
-        alt="Affiliate application background with bottles"
-        className="pointer-events-none absolute left-1/2 top-0 z-0 h-[1090px] w-[1440px] max-w-none -translate-x-1/2 select-none"
-        draggable={false}
-        height={1090}
-        priority={false}
-        src="/affiliate-application.svg"
-        unoptimized
-        width={1440}
-      />
+      <div className="absolute left-1/2 top-0 h-[1090px] w-[1440px] max-w-full -translate-x-1/2 overflow-hidden bg-[#0B1222]">
+        <Image
+          alt="Affiliate application background with bottles"
+          className="pointer-events-none absolute left-0 top-0 z-0 h-[1090px] w-[1440px] max-w-none select-none"
+          draggable={false}
+          height={1090}
+          priority={false}
+          src="/affiliate-application.svg"
+          unoptimized
+          width={1440}
+        />
 
-      <a
-        aria-label="Read affiliate FAQs"
-        className="absolute left-1/2 top-[246px] z-20 h-[46px] w-[228px] -translate-x-[229px] rounded-xl"
-        href="#affiliate-faqs"
-      />
+        <a
+          aria-label="Read affiliate FAQs"
+          className="absolute left-1/2 top-[246px] z-20 h-[46px] w-[228px] -translate-x-[229px] rounded-xl"
+          href="#affiliate-faqs"
+        />
 
-      <form
-        aria-label="Affiliate program application"
-        className="absolute left-1/2 top-[344px] z-20 flex h-[674px] w-[min(480px,calc(100%-64px))] -translate-x-1/2 flex-col rounded-3xl border border-[#E2E8F0] bg-white px-5 pb-6 pt-[23px]"
-        onSubmit={handleSubmit}
-      >
+        <form
+          aria-label="Affiliate program application"
+          className="absolute left-1/2 top-[344px] z-20 flex h-[674px] w-[min(480px,calc(100%-64px))] -translate-x-1/2 flex-col rounded-3xl border border-[#E2E8F0] bg-white px-5 pb-6 pt-[23px]"
+          onSubmit={handleSubmit}
+        >
         <Field label="Full Name">
           <User className="h-5 w-5 shrink-0 text-[#999999]" strokeWidth={2} />
           <input
@@ -179,7 +180,8 @@ export function AffiliateApplication() {
             Application saved. We can connect this to email or CRM next.
           </p>
         ) : null}
-      </form>
+        </form>
+      </div>
     </section>
   );
 }

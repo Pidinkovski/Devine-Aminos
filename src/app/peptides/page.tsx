@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Bottle } from "@/components/bottle";
 import { Footer } from "@/components/footer";
 import { HomeFaq } from "@/components/home-faq";
@@ -81,6 +82,7 @@ export default function PeptidesPage() {
   const [sortOption, setSortOption] = useState("Most Popular");
   const [sortOpen, setSortOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     function syncSearchQuery(event?: Event) {
@@ -244,7 +246,7 @@ export default function PeptidesPage() {
               <ProductListingCard
                 key={`${item.name}-${index}`}
                 item={item}
-                onViewDetails={() => setSelectedProduct(item)}
+                onViewDetails={() => router.push(`/peptides/${item.product.slug}`)}
               />
             ))}
           </div>
